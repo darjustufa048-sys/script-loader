@@ -5,9 +5,8 @@ const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Route that your loadstring will hit
 app.get('/script', (req, res) => {
-    const filePath = path.join(__dirname, 'script.lua');
+    const filePath = path.join(__dirname, 'EGirlHub_Monochrome-obfuscated.lua');
     
     fs.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
@@ -15,15 +14,14 @@ app.get('/script', (req, res) => {
             return res.status(500).send('-- Error: Script file missing or unreadable');
         }
         
-        // CRITICAL: Must be text/plain so executors parse the raw code correctly
+        // Essential so your executor reads the raw Luau text cleanly
         res.setHeader('Content-Type', 'text/plain');
         res.send(data);
     });
 });
 
-// Basic fallback route for the home page
 app.get('/', (req, res) => {
-    res.send('Luau Loader API is online.');
+    res.send('Loader API is online.');
 });
 
 app.listen(PORT, () => {
